@@ -15,7 +15,14 @@ def transport(loc, vel, dt):
     if isinstance(loc, (int, float)) and isinstance(vel, (int, float)):
         loc = loc + vel * dt
 
+    # if loc or vel is list, we want to convert to numpy arrays
+    if type(loc) is list:
+        loc = np.array(loc)
+    if type(vel) is list:
+        vel = np.array(vel)
+
     if isinstance(loc, np.ndarray) and isinstance(vel, np.ndarray):
         vel = vel.astype(np.float32, copy=False)
-        loc[:] = loc[:] + vel[:] *dt
+        loc = loc.astype(np.float32, copy=False)
+        loc[:] = loc[:] + vel[:] * float(dt)
     return loc
